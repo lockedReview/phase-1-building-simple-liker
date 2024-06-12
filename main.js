@@ -3,7 +3,28 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
+const hideError = document.getElementById("modal");
+hideError.classList.add("hidden");
+const input= document.getElementsByClassName("like-glyph")[0];
+console.log(input)
+input.addEventListener('click', function() {
+  if (input.classList.contains("activated-heart")) {
+    input.classList.remove("activated-heart");
+    input.innerText = EMPTY_HEART;
+  } else {
+  mimicServerCall()
+    .then(()=>{
+      const redHeart= document.querySelector(".like-glyph");
+      redHeart.classList.add("activated-heart")
 
+      redHeart.innerText = FULL_HEART;
+    })
+    .catch((error)=>{
+    hideError.classList.remove("hidden");
+    setTimeout(() => { 
+      hideError.classList.add("hidden")}, 3000);
+    });
+  }});
 
 
 
@@ -23,3 +44,5 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     }, 300);
   });
 }
+
+;
